@@ -1,0 +1,120 @@
+/* Conteneur principal */
+.leavesContainer {
+  font-family: 'Arial', sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Titre principal */
+.title {
+  text-align: center;
+  font-size: 2rem;
+  color: #2b2d42;
+  margin-bottom: 20px;
+}
+
+/* Message d'erreur */
+.errorMessage {
+  color: #ff4d4f;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* Style de la table */
+.leavesTable {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.leavesTable th,
+.leavesTable td {
+  text-align: left;
+  padding: 12px 15px;
+}
+
+.leavesTable thead {
+  background-color: #007bff;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.leavesTable tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.leavesTable tbody tr:hover {
+  background-color: #e6f7ff;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Boutons */
+.button {
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.approveBtn {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.rejectBtn {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.deleteBtn {
+  background-color: #ffc107;
+  color: #333;
+}
+
+/* Hover et focus */
+.button:hover {
+  transform: translateY(-2px);
+}
+
+.approveBtn:hover {
+  background-color: #218838;
+}
+
+.rejectBtn:hover {
+  background-color: #c82333;
+}
+
+.deleteBtn:hover {
+  background-color: #e0a800;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .leavesTable th,
+  .leavesTable td {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+}

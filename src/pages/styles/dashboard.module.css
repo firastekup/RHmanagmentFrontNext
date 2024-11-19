@@ -1,112 +1,125 @@
 /* styles/dashboard.module.css */
 .dashboard {
-    font-family: 'Arial', sans-serif;
-    padding: 20px;
-    background-color: #f4f7fc;
-    max-width: 1200px;
-    margin: 0 auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .header {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .header h1 {
-    color: #333;
-    font-size: 2rem;
-  }
-  
-  .header p {
-    font-size: 1.1rem;
-    color: #555;
-  }
-  
-  .leaveRequestLink {
-    background-color: #007bff;
+    display: flex;
+    min-height: 100vh;
+    font-family: 'Roboto', sans-serif; /* Changer la police pour un design plus moderne */
+    background-color: #f4f7fc; /* Ajout d'un fond plus clair */
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #3c4f76; /* Changer le fond de la sidebar pour un bleu plus vif */
     color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    display: inline-block;
-    margin-top: 10px;
-    transition: background-color 0.3s;
-  }
-  
-  .leaveRequestLink:hover {
-    background-color: #0056b3;
-  }
-  
-  .tableWrapper {
-    overflow-x: auto;
-  }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .table th, .table td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .table th {
-    background-color: #f7f7f7;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1); /* Ombre plus douce */
+    position: fixed;
+    height: 100vh;
+    top: 0;
+}
+
+.sidebar h2 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
     font-weight: bold;
-  }
-  
-  .table tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .error {
-    color: red;
-    font-size: 1.1rem;
-    margin-top: 10px;
-  }
-  
-  /* Ajout de classes pour les boutons */
-  .button {
-    padding: 8px 15px;
-    margin-right: 10px;
+}
+
+.navLinks {
+    list-style: none;
+    padding: 0;
+}
+
+.navLink {
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    display: block;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, padding-left 0.2s ease;
+}
+
+.navLink:hover {
+    background-color: #2f3b56; /* Couleur de survol plus sombre */
+    padding-left: 30px; /* Ajout d'un effet de décalage pour le survol */
+}
+
+.logoutButton {
+    padding: 10px 18px;
+    background-color: #e74c3c;
+    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .approveButton {
-    background-color: #28a745;
-    color: white;
-  }
-  
-  .approveButton:hover {
-    background-color: #218838;
-  }
-  
-  .rejectButton {
-    background-color: #dc3545;
-    color: white;
-  }
-  
-  .rejectButton:hover {
-    background-color: #c82333;
-  }
-  
-  .deleteButton {
-    background-color: #ffc107;
-    color: white;
-  }
-  
-  .deleteButton:hover {
-    background-color: #e0a800;
-  }
-  
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.logoutButton:hover {
+    background-color: #c0392b;
+}
+
+.mainContent {
+    flex-grow: 1;
+    margin-left: 270px; /* Décalage pour laisser de l'espace à la sidebar */
+    padding: 30px;
+    background-color: #ffffff;
+    max-width: 100%;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h2 {
+    color: #333;
+    font-size: 2.2rem;
+}
+
+.header p {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.tableWrapper {
+    overflow-x: auto;
+    margin-top: 30px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table th, .table td {
+    padding: 18px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #f7f7f7;
+    font-weight: bold;
+}
+
+.table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.error {
+    color: red;
+    font-size: 1.2rem;
+    margin-top: 15px;
+    font-weight: bold;
+}

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import styles from './styles/Leaves.module.css'; // Import CSS Modules
 
 const Leaves = () => {
   const [leaves, setLeaves] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Récupérer tous les congés depuis l'API
     axios.get('http://localhost:4000/leaves')
       .then((response) => {
         setLeaves(response.data);
@@ -37,10 +37,10 @@ const Leaves = () => {
   };
 
   return (
-    <div>
-      <h1>Liste des congés</h1>
-      {error && <p>{error}</p>}
-      <table>
+    <div className={styles.leavesContainer}>
+      <h1 className={styles.title}>Liste des congés</h1>
+      {error && <p className={styles.errorMessage}>{error}</p>}
+      <table className={styles.leavesTable}>
         <thead>
           <tr>
             <th>Nom de l'employé</th>
@@ -53,15 +53,29 @@ const Leaves = () => {
         <tbody>
           {leaves.map((leave) => (
             <tr key={leave.id}>
-              {/* Afficher le nom de l'employé depuis le champ nomEmploye */}
               <td>{leave.nomEmploye}</td>
               <td>{new Date(leave.startDate).toLocaleDateString()}</td>
               <td>{new Date(leave.endDate).toLocaleDateString()}</td>
               <td>{leave.status}</td>
-              <td>
-                <button onClick={() => updateLeave(leave.id, 'approved')}>Approuver</button>
-                <button onClick={() => updateLeave(leave.id, 'rejected')}>Rejeter</button>
-                <button onClick={() => deleteLeave(leave.id)}>Supprimer</button>
+              <td className={styles.actions}>
+                <button
+                  className={`${styles.button} ${styles.approveBtn}`}
+                  onClick={() => updateLeave(leave.id, 'approved')}
+                >
+                  <span>✔</span> Approuver
+                </button>
+                <button
+                  className={`${styles.button} ${styles.rejectBtn}`}
+                  onClick={() => updateLeave(leave.id, 'rejected')}
+                >
+                  <span>✘</span> Rejeter
+                </button>
+                <button
+                  className={`${styles.button} ${styles.deleteBtn}`}
+                  onClick={() => deleteLeave(leave.id)}
+                >
+                  <span>🗑️</span> Supprimer
+                </button>
               </td>
             </tr>
           ))}

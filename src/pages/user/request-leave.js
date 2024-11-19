@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import styles from '../styles/requestLeave.module.css'; // Import the CSS module
 
 const RequestLeavePage = () => {
   const [startDate, setStartDate] = useState('');
@@ -13,7 +14,7 @@ const RequestLeavePage = () => {
     e.preventDefault();
 
     const token = localStorage.getItem('token');
-    const userName = localStorage.getItem('userName');  // Récupérer le nom de l'utilisateur
+    const userName = localStorage.getItem('userName');
     if (!token || !userName) {
       router.push('/login');
       return;
@@ -21,12 +22,12 @@ const RequestLeavePage = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:4000/leaves', // Votre route backend pour créer une demande de congé
+        'http://localhost:4000/leaves',
         {
-          employeeId: 1, // Vous devez remplacer cela par l'ID de l'utilisateur connecté
+          employeeId: 1,
           startDate,
           endDate,
-          nomEmploye: userName, // Ajouter le nom de l'employé
+          nomEmploye: userName,
         },
         {
           headers: {
@@ -43,30 +44,34 @@ const RequestLeavePage = () => {
   };
 
   return (
-    <div>
-      <h1>Request Leave</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Start Date</label>
+    <div className={styles.container}>
+      <h1 className={styles.header}>Request Leave</h1>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <div className={styles.formGroup}>
+          <label htmlFor="startDate">Start Date</label>
           <input
+            id="startDate"
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
             required
+            className={styles.input}
           />
         </div>
-        <div>
-          <label>End Date</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="endDate">End Date</label>
           <input
+            id="endDate"
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
             required
+            className={styles.input}
           />
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
-        <button type="submit">Submit Request</button>
+        {error && <p className={styles.error}>{error}</p>}
+        {successMessage && <p className={styles.success}>{successMessage}</p>}
+        <button type="submit" className={styles.submitButton}>Submit Request</button>
       </form>
     </div>
   );

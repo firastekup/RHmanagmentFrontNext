@@ -1,69 +1,53 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useRouter } from 'next/router';
+import Link from 'next/link'; // Next.js Link for routing
+import styles from '../styles/adminDashboard.module.css';
 
-const LeavesPage = () => {
-  const [leaves, setLeaves] = useState([]);
-  const [error, setError] = useState(null);
+const AdminDashboard = () => {
+  const [userName, setUserName] = useState('');
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    // Vérification du token et de l'identifiant de l'employé dans le localStorage
     const token = localStorage.getItem('token');
-    const employeeId = localStorage.getItem('employeeId');
-
-    // Si le token ou l'ID de l'employé est manquant, rediriger vers la page de login
-    if (!token || !employeeId) {
+    const userName = localStorage.getItem('userName');
+    if (!token || !userName) {
       router.push('/login');
     } else {
-      // Si l'utilisateur est authentifié, récupérer les congés
-      axios
-        .get(`http://localhost:4000/leaves/notifications/${employeeId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          console.log("Réponse API congés :", response.data);  // Ajouter un log pour vérifier la réponse
-          setLeaves(response.data);
-        })
-        .catch((err) => {
-          console.error('Erreur lors de la récupération des congés :', err); // Affichage de l'erreur
-          setError('Erreur lors de la récupération des congés');
-        });
+      setUserName(userName);
+      setLoading(false);
     }
-  }, [router]); // Dépendances sur le router pour la redirection
+  }, [router]);
+
+  if (loading) {
+    return <div className={styles.loading}>Loading...</div>;
+  }
 
   return (
-    <div>
-      <h1>Liste de vos congés</h1>
-      {error && <p>{error}</p>}
-      {leaves.length > 0 ? (
-        <table>
-          <thead>
-            <tr>
-              <th>Nom de l'employé</th>
-              <th>Début</th>
-              <th>Fin</th>
-              <th>Statut</th>
-            </tr>
-          </thead>
-          <tbody>
-            {leaves.map((leave) => (
-              <tr key={leave.id}>
-                <td>{leave.nomEmploye}</td>
-                <td>{new Date(leave.startDate).toLocaleDateString()}</td>
-                <td>{new Date(leave.endDate).toLocaleDateString()}</td>
-                <td>{leave.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p>Aucun congé trouvé.</p>
-      )}
+    <div className={styles.container}>
+      <div className={styles.sidebar}>
+        <h2 className={styles.logo}>Admin</h2>
+        <ul className={styles.sidebarLinks}>
+          <li><Link href="/admin/dashboard">Dashboard</Link></li>
+          <li><Link href="/leaves">Leaves List</Link></li>
+          <li><Link href="/admin/settings">Settings</Link></li>
+          <li><Link href="/admin/reports">Reports</Link></li>
+          <li><Link href="/logout">Logout</Link></li>
+        </ul>
+      </div>
+
+      <div className={styles.mainContent}>
+        <div className={styles.header}>
+          <h1>Welcome, {userName} (Admin)</h1>
+          <p>This is the Admin Dashboard.</p>
+        </div>
+        <div className={styles.content}>
+          <p>Manage users, view reports, and configure settings from the dashboard.</p>
+          <button className={styles.button}>Manage Users</button>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default LeavesPage;
+export default AdminDashboard;

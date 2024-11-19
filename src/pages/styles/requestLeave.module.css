@@ -1,0 +1,80 @@
+/* styles/requestLeave.module.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    background-color: #f4f7fc;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .header {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .formGroup {
+    margin-bottom: 20px;
+  }
+  
+  .label {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #333;
+    background-color: #fff;
+    box-sizing: border-box;
+  }
+  
+  .input:focus {
+    border-color: #2980b9;
+    outline: none;
+  }
+  
+  .error {
+    color: red;
+    font-size: 1.1rem;
+    margin-top: 10px;
+  }
+  
+  .success {
+    color: green;
+    font-size: 1.1rem;
+    margin-top: 10px;
+  }
+  
+  .submitButton {
+    padding: 12px 20px;
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+  }
+  
+  .submitButton:hover {
+    background-color: #3498db;
+  }
+  
