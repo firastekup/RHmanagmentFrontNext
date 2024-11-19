@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import styles from './styles/LoginPage.module.css'; // Importing the CSS file
+import styles from './styles/LoginPage.module.css'; // Importation du fichier CSS
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -17,25 +17,26 @@ const LoginPage = () => {
         password,
       });
 
-      // Store token and user name in localStorage
+      // Stocker le token, le nom de l'utilisateur, et l'ID dans localStorage
       localStorage.setItem('token', response.data.access_token);
       localStorage.setItem('userName', response.data.user.name);
+      localStorage.setItem('employeeId', response.data.user.id);  // Stocker l'ID de l'employé
 
-      // Redirect based on user role
+      // Redirection en fonction du rôle de l'utilisateur
       if (response.data.user.role === 'admin') {
         router.push('/admin/dashboard');
       } else {
         router.push('/user/dashboard');
       }
     } catch (error) {
-      setError('Invalid email or password');
+      setError('Email ou mot de passe incorrect');
     }
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.loginBox}>
-        <h1 className={styles.title}>Login</h1>
+        <h1 className={styles.title}>Connexion</h1>
         <form onSubmit={handleLogin} className={styles.form}>
           <div className={styles.formGroup}>
             <label htmlFor="email" className={styles.label}>Email</label>
@@ -49,7 +50,7 @@ const LoginPage = () => {
             />
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="password" className={styles.label}>Password</label>
+            <label htmlFor="password" className={styles.label}>Mot de passe</label>
             <input
               type="password"
               id="password"
@@ -60,7 +61,7 @@ const LoginPage = () => {
             />
           </div>
           {error && <p className={styles.error}>{error}</p>}
-          <button type="submit" className={styles.submitButton}>Login</button>
+          <button type="submit" className={styles.submitButton}>Se connecter</button>
         </form>
       </div>
     </div>
