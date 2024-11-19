@@ -1,4 +1,3 @@
-// pages/user/request-leave.js
 import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
@@ -14,7 +13,8 @@ const RequestLeavePage = () => {
     e.preventDefault();
 
     const token = localStorage.getItem('token');
-    if (!token) {
+    const userName = localStorage.getItem('userName');  // Récupérer le nom de l'utilisateur
+    if (!token || !userName) {
       router.push('/login');
       return;
     }
@@ -23,9 +23,10 @@ const RequestLeavePage = () => {
       const response = await axios.post(
         'http://localhost:4000/leaves', // Votre route backend pour créer une demande de congé
         {
-          employeeId: 1, // Vous devez remplacer cela par l'ID de l'utilisateur connecté, par exemple depuis un contexte ou le token
+          employeeId: 1, // Vous devez remplacer cela par l'ID de l'utilisateur connecté
           startDate,
           endDate,
+          nomEmploye: userName, // Ajouter le nom de l'employé
         },
         {
           headers: {

@@ -1,69 +1,67 @@
-// pages/leaves.js
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const LeavesPage = () => {
+const Leaves = () => {
   const [leaves, setLeaves] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fonction pour récupérer les données des congés
-    const fetchLeaves = async () => {
-      try {
-        const response = await fetch('http://localhost:4000/leaves', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          },
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setLeaves(data);
-        } else {
-          console.error('Failed to fetch leaves');
-        }
-      } catch (error) {
-        console.error('Error fetching leaves:', error);
-      } finally {
-        setLoading(false);  // Mettre à jour l'état de chargement
-      }
-    };
-
-    fetchLeaves();
+    // Récupérer tous les congés depuis l'API
+    axios.get('http://localhost:4000/leaves')
+      .then((response) => {
+        setLeaves(response.data);
+      })
+      .catch(() => {
+        setError('Erreur lors de la récupération des congés');
+      });
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  const deleteLeave = async (id) => {
+    try {
+      await axios.delete(`http://localhost:4000/leaves/${id}`);
+      setLeaves((prevLeaves) => prevLeaves.filter((leave) => leave.id !== id));
+    } catch (error) {
+      console.error('Erreur lors de la suppression du congé', error);
+    }
+  };
+
+  const updateLeave = async (id, status) => {
+    try {
+      await axios.patch(`http://localhost:4000/leaves/${id}`, { status });
+      setLeaves((prevLeaves) =>
+        prevLeaves.map((leave) => (leave.id === id ? { ...leave, status } : leave))
+      );
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour du congé', error);
+    }
+  };
 
   return (
     <div>
-      <h1>Leave Requests</h1>
+      <h1>Liste des congés</h1>
+      {error && <p>{error}</p>}
       <table>
         <thead>
           <tr>
-            <th>Employee Name</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Status</th>
-            <th>Action</th>
+            <th>Nom de l'employé</th>
+            <th>Début</th>
+            <th>Fin</th>
+            <th>Statut</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {leaves.map((leave) => (
             <tr key={leave.id}>
-              <td>{leave.employeeName}</td>
+              {/* Afficher le nom de l'employé depuis le champ nomEmploye */}
+              <td>{leave.nomEmploye}</td>
               <td>{new Date(leave.startDate).toLocaleDateString()}</td>
               <td>{new Date(leave.endDate).toLocaleDateString()}</td>
               <td>{leave.status}</td>
               <td>
-                {leave.status === 'pending' && (
-                  <>
-                    <button>Approve</button>
-                    <button>Reject</button>
-                  </>
-                )}
+                <button onClick={() => updateLeave(leave.id, 'approved')}>Approuver</button>
+                <button onClick={() => updateLeave(leave.id, 'rejected')}>Rejeter</button>
+                <button onClick={() => deleteLeave(leave.id)}>Supprimer</button>
               </td>
             </tr>
           ))}
@@ -73,4 +71,4 @@ const LeavesPage = () => {
   );
 };
 
-export default LeavesPage;
+export default Leaves;
