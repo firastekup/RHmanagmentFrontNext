@@ -1,5 +1,7 @@
+// pages/dashboard.js
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';  // Importation de Link
 
 const DashboardPage = () => {
   const [userName, setUserName] = useState('');
@@ -23,6 +25,11 @@ const DashboardPage = () => {
     <div>
       <h1>Welcome to your Dashboard</h1>
       {userName && <p>Hello, {userName}!</p>}
+
+      {/* Lien vers la page de demande de congé */}
+      <Link href="/user/request-leave">
+        <a>Request Leave</a> {/* Ce lien redirigera l'utilisateur vers la page de demande de congé */}
+      </Link>
     </div>
   );
 };
