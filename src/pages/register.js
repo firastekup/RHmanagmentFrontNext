@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import styles from './styles/RegisterPage.module.css'; // Importing the CSS file
-import { useRouter } from 'next/router'; // Importing useRouter
 
 const RegisterPage = () => {
   const [name, setName] = useState('');
@@ -28,7 +28,8 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.pageContainer}>
+      {/* Register Form Container */}
       <div className={styles.registerBox}>
         <h1 className={styles.title}>Register</h1>
         <form onSubmit={handleRegister} className={styles.form}>

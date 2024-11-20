@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import axios from 'axios';
-import styles from '../styles/dashboard.module.css';  // Importation du fichier CSS
+import styles from '../styles/dashboard.module.css';
+import Image from 'next/image';  // Importation du composant Image de Next.js
 
 const DashboardPage = () => {
   const [userName, setUserName] = useState('');
@@ -41,22 +42,34 @@ const DashboardPage = () => {
   return (
     <div className={styles.dashboard}>
       <div className={styles.sidebar}>
-        <h2>Tableau de bord</h2>
+        {/* Utilisation du composant Image de Next.js pour afficher le logo */}
+        <div className={styles.logoWrapper}>
+          <Image 
+            src="/images/logo.png"  // Chemin relatif à partir du dossier 'public'
+            alt="Logo"
+            width={200}  // Largeur de l'image
+            height={200} // Hauteur de l'image
+            className={styles.logo}
+          />
+        </div>
+
+        <h2 className={styles.dashboardTitle}>Tableau de bord</h2>
+
         <ul className={styles.navLinks}>
           <li><Link href="/user/request-leave" className={styles.navLink}>Demander un congé</Link></li>
           <li><Link href="/profile" className={styles.navLink}>Mon profil</Link></li>
           <li><button onClick={handleLogout} className={styles.logoutButton}>Déconnexion</button></li>
         </ul>
       </div>
-      
+
       <div className={styles.mainContent}>
         <div className={styles.header}>
-          {userName && <p>Bienvenue, {userName}!</p>}
-          <h2>Mes congés</h2>
+          {userName && <p className={styles.welcomeMessage}>Bienvenue, {userName}!</p>}
+          <h2 className={styles.sectionTitle}>Mes congés</h2>
         </div>
-        
+
         {error && <p className={styles.error}>{error}</p>}
-        
+
         <div className={styles.tableWrapper}>
           <table className={styles.table}>
             <thead>
