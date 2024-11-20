@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import styles from './styles/RegisterPage.module.css'; // Importing the CSS file
+import { useRouter } from 'next/router'; // Importing useRouter
 
 const RegisterPage = () => {
   const [name, setName] = useState('');
@@ -8,6 +9,7 @@ const RegisterPage = () => {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('user');
   const [error, setError] = useState('');
+  const router = useRouter(); // Initialize router
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -19,6 +21,7 @@ const RegisterPage = () => {
         role,
       });
       alert('Registration successful');
+      router.push('/login'); // Redirect to login page after successful registration
     } catch (error) {
       setError('Error occurred during registration');
     }
