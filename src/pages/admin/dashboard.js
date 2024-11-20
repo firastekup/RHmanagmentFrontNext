@@ -1,21 +1,20 @@
+import styles from '../styles/adminDashboard.module.css'; // Import CSS module
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import axios from 'axios'; // Ajouter axios pour les requêtes HTTP
-import { Line } from 'react-chartjs-2'; // Importation du composant Line de react-chartjs-2
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'; // Importation des éléments nécessaires pour Chart.js
-import styles from '../styles/adminDashboard.module.css'; // Import CSS Module
+import axios from 'axios';
+import { Line } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
-// Enregistrement des composants Chart.js nécessaires
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const AdminDashboard = () => {
   const [userName, setUserName] = useState('');
   const [loading, setLoading] = useState(true);
-  const [leaves, setLeaves] = useState([]); // Liste des congés
-  const [leaveCount, setLeaveCount] = useState(0); // Compteur des congés
-  const [userCount, setUserCount] = useState(0); // Compteur des utilisateurs
-  const [leaveDates, setLeaveDates] = useState([]); // Dates des congés pour l'axe X du graphique
-  const [leaveCounts, setLeaveCounts] = useState([]); // Nombre de congés par date pour l'axe Y du graphique
+  const [leaves, setLeaves] = useState([]);
+  const [leaveCount, setLeaveCount] = useState(0);
+  const [userCount, setUserCount] = useState(0);
+  const [leaveDates, setLeaveDates] = useState([]);
+  const [leaveCounts, setLeaveCounts] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -30,7 +29,6 @@ const AdminDashboard = () => {
     }
   }, [router]);
 
-  // Fonction pour récupérer les congés
   const fetchLeaves = async () => {
     const token = localStorage.getItem('token');
     try {
@@ -40,9 +38,8 @@ const AdminDashboard = () => {
       setLeaves(response.data);
       setLeaveCount(response.data.length);
 
-      // Préparer les données pour le graphique
-      const dates = response.data.map(leave => leave.date); // Supposons que chaque congé a une date
-      const counts = response.data.map(leave => leave.count); // Nombre de congés par date (par exemple, 1 pour chaque demande)
+      const dates = response.data.map(leave => leave.date);
+      const counts = response.data.map(leave => leave.count);
 
       setLeaveDates(dates);
       setLeaveCounts(counts);
@@ -51,7 +48,6 @@ const AdminDashboard = () => {
     }
   };
 
-  // Fonction pour récupérer le nombre d'utilisateurs
   const fetchUserCount = async () => {
     const token = localStorage.getItem('token');
     try {
@@ -64,17 +60,14 @@ const AdminDashboard = () => {
     }
   };
 
-  // Effect pour charger les données au début et définir un rafraîchissement périodique
   useEffect(() => {
     fetchLeaves();
     fetchUserCount();
 
-    // Rafraîchir les données toutes les 5 secondes
     const interval = setInterval(() => {
-      fetchLeaves(); // Rafraîchir les congés
-    }, 5000); // Mettre à jour toutes les 5 secondes
+      fetchLeaves();
+    }, 5000);
 
-    // Nettoyer l'intervalle lorsque le composant est démonté
     return () => clearInterval(interval);
   }, []);
 
@@ -85,16 +78,15 @@ const AdminDashboard = () => {
   };
 
   if (loading) {
-    return <div className={styles.loading}>Loading...</div>;
+    return <div>Loading...</div>;
   }
 
-  // Configuration du graphique
   const chartData = {
-    labels: leaveDates, // L'axe X avec les dates des congés
+    labels: leaveDates,
     datasets: [
       {
         label: 'Number of Leaves',
-        data: leaveCounts, // L'axe Y avec le nombre de congés
+        data: leaveCounts,
         fill: false,
         borderColor: 'rgba(75, 192, 192, 1)',
         tension: 0.1,
@@ -104,19 +96,17 @@ const AdminDashboard = () => {
 
   return (
     <div className={styles.container}>
-      {/* Sidebar */}
       <div className={styles.sidebar}>
-        <h2 className={styles.logo}>Admin</h2>
-        <ul className={styles.sidebarLinks}>
+        <h2>Admin</h2>
+        <ul>
           <li><a href="/admin/dashboard">Dashboard</a></li>
           <li><a href="/leaves">Leaves List</a></li>
           <li><a href="/admin/AddInternship">Add Internship</a></li>
           <li><a href="/admin/interships">List Internships</a></li>
-          <li><button onClick={handleLogout} className={styles.logoutButton}>Logout</button></li>
+          <li><button onClick={handleLogout}>Logout</button></li>
         </ul>
       </div>
 
-      {/* Main Content */}
       <div className={styles.mainContent}>
         <div className={styles.header}>
           <h1>Welcome, {userName} (Admin)</h1>
@@ -124,32 +114,28 @@ const AdminDashboard = () => {
         </div>
 
         <div className={styles.cards}>
-          {/* Card for the number of users */}
           <div className={styles.card}>
-            <img src="/images/userlogo.png" alt="Users" className={styles.cardIcon} />
+            <img className={styles.cardIcon} src="/images/userlogo.png" alt="Users" />
             <h3>Users</h3>
             <p>{userCount}</p>
             <button className={styles.cardButton}>View Details</button>
           </div>
 
-          {/* Card for the number of leaves */}
           <div className={styles.card}>
-            <img src="/images/leave.jpg" alt="Leaves" className={styles.cardIcon} />
+            <img className={styles.cardIcon} src="/images/leave.jpg" alt="Leaves" />
             <h3>Leaves</h3>
             <p>{leaveCount}</p>
             <button className={styles.cardButton}>View Details</button>
           </div>
 
-          {/* Card for Reports */}
           <div className={styles.card}>
-            <img src="/images/report.png" alt="Reports" className={styles.cardIcon} />
+            <img className={styles.cardIcon} src="/images/report.png" alt="Reports" />
             <h3>Reports</h3>
             <p>20 New</p>
             <button className={styles.cardButton}>View Reports</button>
           </div>
         </div>
 
-        {/* Graphique des congés */}
         <div className={styles.chartContainer}>
           <h2>Leave Trends</h2>
           <Line data={chartData} />
