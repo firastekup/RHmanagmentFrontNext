@@ -77,8 +77,8 @@ const AdminDashboard = () => {
         <ul className={styles.sidebarLinks}>
           <li><a href="/admin/dashboard">Dashboard</a></li>
           <li><a href="/leaves">Leaves List</a></li>
-          <li><a href="/admin/settings">Settings</a></li>
-          <li><a href="/admin/reports">Reports</a></li>
+          <li><a href="/admin/AddInternship">intership</a></li>
+          <li><a href="/admin/interships">list intership</a></li>
           <li><button onClick={handleLogout} className={styles.logoutButton}>Logout</button></li>
         </ul>
       </div>
