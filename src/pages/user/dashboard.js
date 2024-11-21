@@ -57,7 +57,7 @@ const DashboardPage = () => {
 
         <ul className={styles.navLinks}>
           <li><Link href="/user/request-leave" className={styles.navLink}>Demander un congé</Link></li>
-          <li><Link href="/profile" className={styles.navLink}>Mon profil</Link></li>
+          <li><Link href="/user/information" className={styles.navLink}>Mon profil</Link></li>
           <li><button onClick={handleLogout} className={styles.logoutButton}>Déconnexion</button></li>
         </ul>
       </div>

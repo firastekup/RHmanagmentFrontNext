@@ -99,7 +99,7 @@ const AdminDashboard = () => {
       <div className={styles.sidebar}>
         <h2>Admin</h2>
         <ul>
-          <li><a href="/admin/dashboard">Dashboard</a></li>
+          <li><a href="/admin/information">Dashboard</a></li>
           <li><a href="/leaves">Leaves List</a></li>
           <li><a href="/admin/AddInternship">Add Internship</a></li>
           <li><a href="/admin/interships">List Internships</a></li>

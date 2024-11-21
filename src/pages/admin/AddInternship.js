@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import styles from '../styles/AddInternship.module.css'; // Correct import for CSS modules
 
 const AddInternship = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ const AddInternship = () => {
   });
 
   const [message, setMessage] = useState('');
+  const [isError, setIsError] = useState(false);
 
   // Handle changes in form fields
   const handleChange = (e) => {
@@ -30,6 +32,7 @@ const AddInternship = () => {
       const response = await axios.post('http://localhost:4000/internships', formData);
       if (response.status === 201) {
         setMessage('Internship added successfully!');
+        setIsError(false);
         setFormData({
           subject: '',
           startDate: '',
@@ -43,18 +46,17 @@ const AddInternship = () => {
         });
       }
     } catch (error) {
-      console.error('Error adding internship:', error);
       setMessage('Failed to add internship. Please try again.');
+      setIsError(true);
     }
   };
 
   return (
-    <div>
-      <div>
-        <h1>Add Internship</h1>
-        <form onSubmit={handleSubmit}>
-          {/* Subject */}
-          <label htmlFor="subject">Subject</label>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Add Internship</h1>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <div className={styles.formGroup}>
+          <label htmlFor="subject" className={styles.label}>Subject</label>
           <input
             type="text"
             id="subject"
@@ -62,10 +64,12 @@ const AddInternship = () => {
             value={formData.subject}
             onChange={handleChange}
             required
+            className={styles.input}
           />
+        </div>
 
-          {/* Start Date */}
-          <label htmlFor="startDate">Start Date</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="startDate" className={styles.label}>Start Date</label>
           <input
             type="date"
             id="startDate"
@@ -73,10 +77,12 @@ const AddInternship = () => {
             value={formData.startDate}
             onChange={handleChange}
             required
+            className={styles.input}
           />
+        </div>
 
-          {/* End Date */}
-          <label htmlFor="endDate">End Date</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="endDate" className={styles.label}>End Date</label>
           <input
             type="date"
             id="endDate"
@@ -84,10 +90,12 @@ const AddInternship = () => {
             value={formData.endDate}
             onChange={handleChange}
             required
+            className={styles.input}
           />
+        </div>
 
-          {/* Duration */}
-          <label htmlFor="duration">Duration (months)</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="duration" className={styles.label}>Duration (months)</label>
           <input
             type="number"
             id="duration"
@@ -95,10 +103,12 @@ const AddInternship = () => {
             value={formData.duration}
             onChange={handleChange}
             required
+            className={styles.input}
           />
+        </div>
 
-          {/* Username */}
-          <label htmlFor="username">Username</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="username" className={styles.label}>Username</label>
           <input
             type="text"
             id="username"
@@ -106,10 +116,12 @@ const AddInternship = () => {
             value={formData.username}
             onChange={handleChange}
             required
+            className={styles.input}
           />
+        </div>
 
-          {/* Email */}
-          <label htmlFor="email">Email</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="email" className={styles.label}>Email</label>
           <input
             type="email"
             id="email"
@@ -117,10 +129,12 @@ const AddInternship = () => {
             value={formData.email}
             onChange={handleChange}
             required
+            className={styles.input}
           />
+        </div>
 
-          {/* Framer */}
-          <label htmlFor="framer">Framer</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="framer" className={styles.label}>Framer</label>
           <input
             type="text"
             id="framer"
@@ -128,10 +142,12 @@ const AddInternship = () => {
             value={formData.framer}
             onChange={handleChange}
             required
+            className={styles.input}
           />
+        </div>
 
-          {/* Supervisor */}
-          <label htmlFor="supervisor">Supervisor</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="supervisor" className={styles.label}>Supervisor</label>
           <input
             type="text"
             id="supervisor"
@@ -139,23 +155,33 @@ const AddInternship = () => {
             value={formData.supervisor}
             onChange={handleChange}
             required
+            className={styles.input}
           />
+        </div>
 
-          {/* Status */}
-          <label htmlFor="status">Status</label>
-          <select id="status" name="status" value={formData.status} onChange={handleChange}>
+        <div className={styles.formGroup}>
+          <label htmlFor="status" className={styles.label}>Status</label>
+          <select
+            id="status"
+            name="status"
+            value={formData.status}
+            onChange={handleChange}
+            className={styles.input}
+          >
             <option value="pending">Pending</option>
             <option value="ongoing">Ongoing</option>
             <option value="completed">Completed</option>
           </select>
+        </div>
 
-          {/* Submit Button */}
-          <button type="submit">Add Internship</button>
-        </form>
+        <button type="submit" className={styles.submitButton}>Add Internship</button>
+      </form>
 
-        {/* Message */}
-        {message && <p>{message}</p>}
-      </div>
+      {message && (
+        <p className={`${styles.message} ${isError ? styles.error : styles.success}`}>
+          {message}
+        </p>
+      )}
     </div>
   );
 };

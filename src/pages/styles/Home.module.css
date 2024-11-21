@@ -1,0 +1,29 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .heroSection {
+    height: 600px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+  }
+  
+  .companyImages {
+    display: flex;
+    justify-content: space-around;
+    padding: 50px 0;
+  }
+  
+  .circleImage {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
